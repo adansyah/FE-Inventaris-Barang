@@ -3,6 +3,7 @@ import Header from "../../Layout/Header";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function AddData() {
   const [form, setForm] = useState({
@@ -31,6 +32,9 @@ function AddData() {
     gambar: null,
   });
 
+  const [previewImage, setPreviewImage] = useState(null);
+
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setForm({
@@ -57,7 +61,7 @@ function AddData() {
         },
       });
 
-      alert("Data berhasil disimpan!");
+      toast.success("KIB  " + response.data.data.kode_barang + " berhasil ditambahkan");
     } catch (err) {
       console.error(err);
       alert("Gagal menyimpan data");
@@ -74,7 +78,7 @@ function AddData() {
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="print:hidden">
-          <Header />
+          <Header activeMenuLabel="Tambah Data KIB" />
         </div>
 
         {/* FORM */}
@@ -87,7 +91,7 @@ function AddData() {
             {/* GRID FORM */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-              <FormInput label="Kode Barang" name="kode_barang" value={form.kode_barang} onChange={handleChange} />
+              <FormInput label="Kode / NUP" name="kode_barang" value={form.kode_barang} onChange={handleChange} />
               <FormInput label="Nama Barang" name="nama_barang" value={form.nama_barang} onChange={handleChange} />
 
               <FormSelect 
@@ -108,19 +112,19 @@ function AddData() {
               </div>
 
               {form.type_kib === "tanah" && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* KIB A */}
-              <FormInput type="number" label="No Rangka" name="no_rangka" value={form.no_rangka} onChange={handleChange} />
-              <FormInput type="number" label="No Mesin" name="no_mesin" value={form.no_mesin} onChange={handleChange} />
-              <FormInput type="number" label="No Pabrik" name="no_pabrik" value={form.no_pabrik} onChange={handleChange} />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <FormInput type="number" label="Ukuran" name="ukuran" value={form.ukuran} onChange={handleChange} />
+              <FormInput label="Status Tanah" name="status_tanah" value={form.status_tanah} onChange={handleChange} />
+              <FormInput label="No Sertifikat" name="no_sertifikat" value={form.no_sertifikat} onChange={handleChange} />
               </div>
+              
               )}
              
              {form.type_kib === "mesin" && (
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FormInput type="number" label="Ukuran" name="ukuran" value={form.ukuran} onChange={handleChange} />
-              <FormInput label="Status Tanah" name="status_tanah" value={form.status_tanah} onChange={handleChange} />
-              <FormInput label="No Sertifikat" name="no_sertifikat" value={form.no_sertifikat} onChange={handleChange} />
+              <FormInput type="number" label="No Rangka" name="no_rangka" value={form.no_rangka} onChange={handleChange} />
+              <FormInput type="number" label="No Mesin" name="no_mesin" value={form.no_mesin} onChange={handleChange} />
+              <FormInput type="number" label="No Pabrik" name="no_pabrik" value={form.no_pabrik} onChange={handleChange} />
               </div>
              )}
              
@@ -144,15 +148,50 @@ function AddData() {
 
               {/* GAMBAR */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">Gambar</label>
-              <input
-                type="file"
-                name="gambar"
-                accept="image/*"
-                onChange={handleChange}
-                className="mt-1 block w-full"
-              />
-            </div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Gambar</label>
+
+                <div
+                  className="border-2 border-dashed border-gray-400 rounded-lg p-4 cursor-pointer 
+                            hover:border-blue-500 transition text-center"
+                  onClick={() => document.getElementById("fileUpload").click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                      setForm({ ...form, gambar: file });
+                      setPreviewImage(URL.createObjectURL(file));
+                    }
+                  }}
+                >
+                  {previewImage ? (
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="mx-auto h-40 object-cover rounded-md"
+                    />
+                  ) : (
+                    <div className="text-gray-500">
+                      <p className="font-medium">Choose Image or Drag & Drop</p>
+                      <p className="text-sm">PNG, JPG, JPEG</p>
+                    </div>
+                  )}
+              </div>
+
+                <input
+                  id="fileUpload"
+                  type="file"
+                  name="gambar"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    setForm({ ...form, gambar: file });
+                    setPreviewImage(URL.createObjectURL(file));
+                  }}
+                />
+              </div>
+
               <FormInput label="Status Penggunaan" name="status_penggunaan" value={form.status_penggunaan} onChange={handleChange} />
               </div>
 

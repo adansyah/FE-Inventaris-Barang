@@ -7,10 +7,14 @@ const RoleRoute = ({ roles, userRole, children }) => {
 
   useEffect(() => {
     if (!isAllowed) {
-      toast.error("Maaf, Anda tidak dapat mengakses halaman ini");
+      const timer = setTimeout(() => {
+        toast.error("Maaf, Anda tidak dapat mengakses halaman ini");
+      }, 0); 
+
+      
+      return () => clearTimeout(timer);
     }
   }, [isAllowed]);
-
   // Jika role tidak cocok → arahkan ke dashboard
   if (!isAllowed) {
     return <Navigate to="/dashboard" replace />;

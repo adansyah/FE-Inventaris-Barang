@@ -34,7 +34,7 @@ const Sidebar = ({ activeMenuId, onMenuItemClick, onLogout }) => {
   };
 
   return (
-    <div className="bg-[#12154c] text-white w-56 h-screen flex flex-col justify-between py-6 px-4 shadow-xl">
+    <div className="bg-[#12154c] text-white w-56 h-full flex flex-col justify-between py-6 px-4 shadow-xl">
       {/* BAGIAN ATAS: LOGO + MENU */}
       <div>
         {/* Logo / Judul Aplikasi */}
@@ -71,18 +71,18 @@ const Sidebar = ({ activeMenuId, onMenuItemClick, onLogout }) => {
 
       {/* BAGIAN BAWAH: LOGOUT */}
       <div className="border-t border-white/10 pt-4 mt-4">
-        <button
-          onClick={onLogout}
-          className="w-full cursor-pointer flex items-center justify-center px-3 py-2 rounded-lg text-sm font-semibold bg-red-500 hover:bg-red-600 text-white transition-colors"
-        >
-          <span className="mr-2">🚪</span>
-          <span>Keluar Sistem</span>
-        </button>
-        <p className="mt-2 text-[10px] text-indigo-200 text-center">
-          Anda login sebagai Administrator
-        </p>
-      </div>
-    </div>
+    <button
+      onClick={onLogout}
+      className="w-full cursor-pointer flex items-center justify-center px-3 py-2 rounded-lg text-sm font-semibold bg-red-500 hover:bg-red-600 text-white transition-colors"
+    >
+      <span className="mr-2">🚪</span>
+      <span>Keluar Sistem</span>
+    </button>
+    <p className="mt-2 text-[10px] text-indigo-200 text-center">
+      Anda login sebagai Administrator
+    </p>
+  </div>
+</div>
   );
 };
 
