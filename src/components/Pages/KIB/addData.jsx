@@ -1,11 +1,12 @@
 import Sidebar from "../../Layout/Sidebar";
 import Header from "../../Layout/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 function AddData() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     kode_barang: "",
     nama_barang: "",
@@ -62,6 +63,7 @@ function AddData() {
       });
 
       toast.success("KIB  " + response.data.data.kode_barang + " berhasil ditambahkan");
+      navigate("/data-induk");
     } catch (err) {
       console.error(err);
       alert("Gagal menyimpan data");
@@ -72,7 +74,7 @@ function AddData() {
     <div className="flex min-h-screen font-sans bg-gray-100">
       {/* Sidebar */}
       <div className="print:hidden">
-        <Sidebar />
+        <Sidebar  />
       </div>
 
       <div className="flex-1 flex flex-col">
@@ -138,7 +140,20 @@ function AddData() {
               
               <FormInput label="Spesifikasi Tambahan" name="spesifikasi_tambahan" value={form.spesifikasi_tambahan} onChange={handleChange} />
 
-              <FormInput label="Lokasi" name="lokasi" value={form.lokasi} onChange={handleChange} />
+              <FormSelect 
+                label="Lokasi Ruangan"
+                name="lokasi"
+                value={form.lokasi}
+                onChange={handleChange}
+                options={[
+                  { value: "", label: "-- Pilih Ruangan --" },
+                  { value: "aula", label: "Aula" },
+                  { value: "gedung a", label: "gedung A" },
+                  { value: "gedung b", label: "gedung B" },
+                  { value: "gedung c", label: "gedung C" },
+                  { value: "gedung d", label: "gedung D" },
+                ]}
+              />
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <FormInput type="number" step="0.01" label="Jumlah (Qty)" name="jumlah" value={form.jumlah} onChange={handleChange} />
@@ -192,7 +207,18 @@ function AddData() {
                 />
               </div>
 
-              <FormInput label="Status Penggunaan" name="status_penggunaan" value={form.status_penggunaan} onChange={handleChange} />
+              <FormSelect
+                label="Kondisi"
+                name="status_penggunaan"
+                value={form.status_penggunaan}
+                onChange={handleChange}
+                options={[
+                  { value: "", label: "-- Kondisi Barang --" },
+                  { value: "baik", label: "Baik" },
+                  { value: "kurang baik", label: "Kurang Baik" },
+                  { value: "rusak berat", label: "Rusak Berat" },
+                ]}
+              />
               </div>
 
             {/* TEXTAREA */}
