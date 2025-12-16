@@ -12,10 +12,10 @@ import PrintLabelsContent from './Label/PrintLabelsContent';
 import AddData from './KIB/addData';
 import AddDataKir from './KIR/addDataKir';
 import UserContent from './User/UserContent';
-import Laporan from './Laporan/laporan';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import LaporanContent from './Laporan/LaporanContent';
 
 
 const Dashboard = ({ initialMenuId = 'dashboard' }) => {
@@ -84,7 +84,7 @@ const Dashboard = ({ initialMenuId = 'dashboard' }) => {
    case 'print_labels':
     return <PrintLabelsContent />;
    case 'laporan':
-    return <Laporan />;
+    return <LaporanContent />;
    case 'user':
     return <UserContent />;
       default:

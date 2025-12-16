@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-function Laporan() {
+function LaporanContent() {
   const [data, setData] = useState([]);
   const [loading , setLoading ] = useState(true);
 
@@ -295,4 +295,4 @@ function Laporan() {
   );
 }
 
-export default Laporan;
+export default LaporanContent;
